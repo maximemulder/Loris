@@ -1,0 +1,156 @@
+/* overwrite default CSS for HTML elements in the header */
+/* sometimes double selector are used to over-override these, eventually, these
+    should be applied globally, removing the need for double selectors */
+.loris-header a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.loris-header button {
+    background-color: inherit;
+    border: inherit;
+}
+
+.loris-header li, .loris-header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* header CSS */
+
+#loris-header {
+    z-index: 15; /* higher than 10 which is used in Loris pages */
+    height: 55px;
+    padding-right: 10px; /* let some space for the scrollbar */
+    box-shadow: 6px 8px 8px 1px #00000025;
+    background-color: #064785;
+    color: white;
+}
+
+.loris-header {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.loris-header-sidebar {
+    padding: 14px;
+    vertical-align: middle;
+}
+
+.loris-header-logo {
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.loris-header-categories {
+    display: flex;
+}
+
+.loris-header-fold .loris-header-categories {
+    display: none;
+}
+
+.loris-header-category {
+    position: relative;
+    margin-top: 4px;
+    padding: 14px;
+    padding-top: 10px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.loris-header-category:hover {
+    background-color: white;
+    color: #064785;
+}
+
+#loris-header .loris-header-modules {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -1px; /* to compensate the border */
+    padding: 4px 0;
+    border: 1px solid #064785;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: none;
+    box-shadow: 6px 8px 8px 1px #00000025;
+    background-color: white;
+    color: #064785;
+}
+
+#loris-header .loris-header-category:hover .loris-header-modules {
+    display: block;
+}
+
+.loris-header-module {
+    display: block;
+    padding: 4px 20px;
+    white-space: nowrap;
+}
+
+#loris-header .loris-header-module:hover {
+    color: #E89A0C;
+}
+
+.loris-header-fill {
+    flex-grow: 1;
+}
+
+.loris-header-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.loris-header-control {
+    margin-top: 4px;
+    padding: 14px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.loris-header-control:hover {
+    background-color: #246EB6;
+}
+
+#help-container {
+    position: relative; /* used to position the help content */
+    background-color: #246EB6;
+}
+
+.help-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+.loris-header-infos {
+    display: flex;
+}
+
+.loris-header-fold .loris-header-infos {
+    display: none;
+}
+
+.loris-header-info {
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.loris-header-title {
+    white-space: nowrap;
+}

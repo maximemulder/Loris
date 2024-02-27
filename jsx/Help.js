@@ -111,10 +111,10 @@ const Help = (props) => {
    * @return {JSX} - React markup for the component
    */
   return (
-    <div>
+    <>
       <button
         type="button"
-        className={'help-button' + (isActive ? ' help-open' : '')}
+        className={'help-button loris-header-control' + (isActive ? ' help-open' : '')}
         onClick={() => setIsActive(!isActive)}
       >
         <img width="17" src={props.baseURL + '/images/help.gif'} />
@@ -139,7 +139,7 @@ const Help = (props) => {
           {content}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -150,6 +150,6 @@ Help.propTypes = {
   baseURL: PropTypes.string.isRequired,
 };
 
-window.RHelp = Help;
+window.Help = Help;
 
 export default Help;

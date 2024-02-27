@@ -218,6 +218,7 @@ let config = [
       Breadcrumbs: './jsx/Breadcrumbs.js',
       CSSGrid: './jsx/CSSGrid.js',
       Help: './jsx/Help.js',
+      Header: './jsx/Header/Header.tsx',
     },
     output: {
       path: __dirname + '/htdocs/js/components/',

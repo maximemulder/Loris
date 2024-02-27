@@ -857,6 +857,7 @@ class NDB_Page extends \LORIS\Http\Endpoint implements RequestHandlerInterface
             $baseurl . '/js/components/Breadcrumbs.js',
             $baseurl . "/js/util/queryString.js",
             $baseurl . '/js/components/Help.js',
+            $baseurl . '/js/components/Header.js',
         ];
         return $files;
     }
@@ -877,7 +878,8 @@ class NDB_Page extends \LORIS\Http\Endpoint implements RequestHandlerInterface
         $files = [
             $baseurl . "/bootstrap/css/bootstrap.min.css",
             $baseurl . "/bootstrap/css/custom-css.css",
-            $baseurl . "/js/jquery/datepicker/datepicker.css"
+            $baseurl . "/js/jquery/datepicker/datepicker.css",
+            $baseurl . "/css/loris-header.css",
         ];
         return $files;
     }

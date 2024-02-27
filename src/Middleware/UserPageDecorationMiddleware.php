@@ -98,6 +98,14 @@ class UserPageDecorationMiddleware implements MiddlewareInterface
             );
             $menu[$cat] = $val;
         }
+
+        foreach ($menu as $cat => $val) {
+            $menu[$cat] = array_map(fn($module) => [
+                'label' => $module->getLabel(),
+                'link' => $module->getLink(),
+            ], $menu[$cat]);
+        }
+
         // Basic page outline variables
         $tpl_data += array(
                       'study_title' => $this->Config->getSetting('title'),

@@ -44,21 +44,6 @@
                 return carry.concat(' - ', item.text);
               }, ''));
             {/if}
-            {if !$breadcrumbs|strstr:'"Edit Help Content"'}
-              const helpContainers = document.getElementsByClassName('help-container');
-              for (let i = 0; i < helpContainers.length; i++) {
-                ReactDOM.createRoot(
-                  helpContainers.item(i)
-                ).render(
-                  React.createElement(RHelp, {
-                    testname: loris.TestName,
-                    subtest: loris.Subtest,
-                    baseURL: loris.BaseURL,
-                  })
-                );
-              }
-            {/if}
-
             // Make Navigation bar toggle change glyphicon up/down
             let navBtn = document.querySelector('.nav-button');
             navBtn.addEventListener('click', function() {
@@ -93,88 +78,7 @@
 
     <div id="wrap">
         {if $dynamictabs neq "dynamictabs"}
-            <nav class="navbar navbar-default navbar-static-top" role="navigation" id="nav-left">
-               <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed nav-button" data-toggle="collapse"
-                            data-target="#example-navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="toggle-icon glyphicon glyphicon-chevron-down" style="color:white"></span>
-                        </button>
-                        <span class='help-container navbar-toggle'></span>
-                       {if $bvl_feedback|default}
-                       <button type="button" class="navbar-toggle">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="glyphicon glyphicon-edit" style="color:white"></span>
-                        </button>
-                       {/if}
-
-
-                       <!-- toggle sidebar in mobile view -->
-                        {if $control_panel|default}
-                            <a id="menu-toggle" href="#" class="navbar-brand">
-                                <span class="glyphicon glyphicon-th-list"></span>
-                            </a>
-                        {/if}
-
-                       <!-- toggle feedback in mobile view -->
-
-
-                        <a class="navbar-brand" href="{$baseurl}/">LORIS{if $sandbox}: DEV{/if}</a>
-                   </div>
-                   <div class="collapse navbar-collapse" id="example-navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            {foreach from=$menus item=menuitems key=category}
-                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{$category}<b class="caret"></b>
-                                        <ul class="dropdown-menu">
-                                            {section name=itemloop loop=$menuitems}
-                                            <li><a href="{$menuitems[itemloop]->getLink()}">{$menuitems[itemloop]->getLabel()}</a></li>
-                                            {/section}
-                                        </ul>
-                                    </a>
-                            {/foreach}
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right" id="nav-right">
-                            {if $bvl_feedback|default}
-                            <li class="hidden-xs hidden-sm">
-                                <a href="#" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu" data-canvas="body">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>
-                            </li>
-                            {/if}
-
-                            <li class="hidden-xs hidden-sm help-container"></li>
-                            <li class="nav">
-                                <a href="#" class="css-tooltip">
-                                    Site Affiliations: {$userNumSites}
-                                    <span class="tooltip-text">{$user.SitesTooltip}</span>
-                                </a>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-right:25px;">
-                                    {$user.Real_name|escape} <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {if $my_preferences|default}
-                                    <li>
-                                        <a href="{$baseurl}/my_preferences/">
-                                            My Preferences
-                                        </a>
-                                    </li>
-                                    {/if}
-                                    <li>
-                                        <a href="{$baseurl}/?logout=true">
-                                            Log Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                   </div>
-               </div>
-            </nav>
+            {include file='header.tpl'}
         {/if}
         <div id="page" class="container-fluid">
 		{if $control_panel|default or $feedback_panel|default}
