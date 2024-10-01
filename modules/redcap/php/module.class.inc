@@ -42,22 +42,6 @@ class Module extends \Module
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        $request_data = [
-            'GET'     => $_GET,
-            'POST'    => $_POST,
-            'REQUEST' => $_REQUEST,
-            'SERVER'  => $_SERVER,
-            'FILES'   => $_FILES,
-            'COOKIES' => $_COOKIE,
-        ];
-
-        // Log the request to a temporary file
-        $request_string = print_r($request_data, TRUE);
-
-        $fp = fopen('/data/tmp/redcap_request.log', 'a');
-        fwrite($fp, $request_string);
-        fclose($fp);
-
         $path = trim($request->getURI()->getPath(), "/");
         switch ($path) {
         case 'notifications':

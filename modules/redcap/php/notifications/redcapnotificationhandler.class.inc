@@ -26,6 +26,17 @@ class RedcapNotificationHandler
         $visit_label     = $notification->getRedcapEventName();
         $instrument_name = $notification->getInstrument();
 
+
+        // TEMP
+        $fp = fopen('/data/tmp/redcap_request.log', 'w');
+        fwrite($fp, json_encode([
+            'PSCID'           => $pscid ,
+            'Visit label'     => $visit_label,
+            'Instrument name' => $instrument_name,
+        ]));
+        fclose($fp);
+        die();
+
         // Acquire LOCK on table to make sure notifications are hanled only once.
         $this->_acquireNotificationLock($notification);
 
