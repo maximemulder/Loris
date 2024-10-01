@@ -17,14 +17,14 @@ class RedcapHttpClient
 
     private ?RedcapProject $_project = null;
 
+    private string $_token;
+
     public function __construct(LorisInstance $loris)
     {
-        $settings = $loris->getConfiguration()->getSetting('REDCap');
+        $settings = $loris->getConfiguration()->getSetting('redcap');
 
         $this->_token  = $settings['token'];
-        $this->_client = new Client(
-            ['base_uri' => $settings['urls']['api'] ?? '']
-        );
+        $this->_client = new Client(['base_uri' => $settings['url']]);
     }
 
     /**

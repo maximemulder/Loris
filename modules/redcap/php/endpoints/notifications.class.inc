@@ -76,9 +76,9 @@ class Notifications extends Endpoint
             $notification = new RedcapNotification($data);
 
             // should the notification be ignored?
-            if ($this->ignoreNotification($notification)) {
-                return new \LORIS\Http\Response();
-            }
+            //if ($this->ignoreNotification($notification)) {
+            //    return new \LORIS\Http\Response();
+            //}
 
             // Add to the database
             $db->insert(

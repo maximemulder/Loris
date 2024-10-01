@@ -1,6 +1,4 @@
--- DROP TABLE IF EXISTS `redcap_notification`;
-
-INSERT IGNORE INTO modules (Name, Active) VALUES ('redcap', 'Y');
+-- Create the REDCap notifications table
 
 CREATE TABLE `redcap_notification` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -13,7 +11,24 @@ CREATE TABLE `redcap_notification` (
   `redcap_url` varchar(255) NOT NULL,
   `project_url` varchar(255) NOT NULL,
   `received_dt` datetime NOT NULL,
+  `handled_dt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `i_redcap_notif_received_dt` (`received_dt`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Add the module to the list of modules
+
+INSERT IGNORE INTO `modules` (`Name`, `Active`) VALUES ('redcap', 'Y');
+
+-- Add the module settings
+
+INSERT INTO `ConfigSettings` (`Name`, `Description`, `Visible`, `AllowMultiple`, `DataType`, `Parent`, `Label`, `OrderNumber`)
+  VALUES
+    ('redcap', 'Settings related to the REDCap integration of LORIS', 1, 0, NULL, NULL, 'REDCap', 13);
+
+SET @redcap_config_id := LAST_INSERT_ID();
+
+INSERT INTO `ConfigSettings` (`Name`, `Description`, `Visible`, `AllowMultiple`, `DataType`, `Parent`, `Label`, `OrderNumber`)
+  VALUES
+    ('url', 'The API URL provided by REDCap', 1, 0, 'text', @redcap_config_id, 'REDCap API URL', 1),
+    ('token', 'The API token provided by REDCap', 1, 0, 'text', @redcap_config_id, 'REDCap API token', 2);
