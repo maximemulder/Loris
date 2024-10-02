@@ -1,4 +1,5 @@
 import {ReactNode} from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ImageQcDropdownProps {
   fileID: number;
@@ -67,11 +68,12 @@ interface ImageQcStatusSelectorProps {
  * @returns The React element
  */
 function ImageQcStatusSelector(props: ImageQcStatusSelectorProps) {
+  const { t } = useTranslation();
   let qcStatusLabel;
   if (props.hasQcPerm && props.fileNew) {
     qcStatusLabel = (
       <span>
-        QC Status
+        {t('QC Status')}
         <span className="text-info">
           (<span className="glyphicon glyphicon-star" /> New)
         </span>
@@ -105,9 +107,10 @@ interface ImageQcSelectedSelectorProps {
  * @returns The React element
  */
 function ImageQcSelectedSelector(props: ImageQcSelectedSelectorProps) {
+  const { t } = useTranslation();
   return (
     <ImageQcDropdown
-      label="Selected"
+      label={t("Selected")}
       formName="selectedvol"
       fileID={props.fileID}
       editable={props.hasQcPerm}
@@ -132,21 +135,23 @@ interface ImageQcCaveatSelectorProps {
  * @returns The React element
  */
 function ImageQcCaveatSelector(props: ImageQcCaveatSelectorProps) {
+  const { t } = useTranslation();
+
   const mriViolationsLink = props.fullName && props.caveat
     ? `/mri_violations/?mincFile=${props.fullName}&seriesUID=${props.seriesUID}`
     : undefined;
 
   return (
     <ImageQcDropdown
-      label="Caveat"
+      label={t("Caveat")}
       formName="caveat"
       fileID={props.fileID}
       editable={props.hasQcPerm && props.editableCaveat}
       options={
         {
           '': '',
-          '1': 'True',
-          '0': 'False',
+          '1': t('True'),
+          '0': t('False'),
         }
       }
       defaultValue={props.caveat ? '1' : '0'}

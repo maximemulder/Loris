@@ -143,6 +143,19 @@
                                 </a>
                             </li>
                             {/if}
+                            <li>
+                            <script>
+                                function changeLanguage(i18n) {
+                                    const language = i18n.language === 'en' ? 'fr' : 'en';
+                                    console.log(language);
+                                    localStorage.setItem('language', language);
+                                    i18n.changeLanguage(language);
+                                }
+                                </script>
+                                <button type="button" onclick="changeLanguage(i18n)">
+                                    English / Français
+                                </button>
+                            </li>
 
                             <li class="hidden-xs hidden-sm help-container"></li>
                             <li class="nav">

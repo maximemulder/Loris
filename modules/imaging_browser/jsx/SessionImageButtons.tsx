@@ -1,5 +1,6 @@
 import {MouseEvent, ReactNode} from 'react';
 import {ImageFiles} from './types';
+import { useTranslation } from 'react-i18next';
 
 interface ButtonProps {
   icon: string;
@@ -60,6 +61,8 @@ interface LongitudinalViewButtonProps {
  * @returns The React element
  */
 function LongitudinalViewButton(props: LongitudinalViewButtonProps) {
+  const { t } = useTranslation();
+
   const url = window.location.origin
     + `/brainbrowser/?minc_id=${props.OtherTimepoints}`;
 
@@ -79,7 +82,7 @@ function LongitudinalViewButton(props: LongitudinalViewButtonProps) {
 
   return (
     <Button icon="eye-open" url={url} onClick={openWindowHandler}>
-      Longitudinal View
+      {t('Longitudinal View')}
     </Button>
   );
 }
@@ -94,6 +97,8 @@ interface QcButtonProps {
  * @returns The React element
  */
 function QcButton(props: QcButtonProps) {
+  const { t } = useTranslation();
+
   const url = window.location.origin
     + `/imaging_browser/feedback_mri_popup/fileID=${props.FileID}`;
 
@@ -114,7 +119,7 @@ function QcButton(props: QcButtonProps) {
 
   return (
     <Button icon="pencil" url={url} onClick={openWindowHandler}>
-      QC Comments
+      {t('QC Comments')}
     </Button>
   );
 }
@@ -130,9 +135,10 @@ interface HeadersButtonProps {
  * @returns The React element
  */
 function HeadersButton(props: HeadersButtonProps) {
+  const { t } = useTranslation();
   return (
     <Button icon="th-list" onClick={props.toggleHeaders}>
-      {!props.headersExpanded ? 'Show Headers' : 'Hide Headers'}
+      {!props.headersExpanded ? t('Show Headers') : t('Hide Headers')}
     </Button>
   );
 }
@@ -175,6 +181,8 @@ interface ImageButtonsProps {
  * @returns The React element
  */
 function ImageButtons(props: ImageButtonsProps) {
+  const { t } = useTranslation();
+
   const style = {
     display: 'flex' as const,
     alignItems: 'center' as const,
@@ -197,48 +205,48 @@ function ImageButtons(props: ImageButtonsProps) {
       />
       <DownloadButton
         url={props.APIFile}
-        label='Download Image'
+        label={t('Download Image')}
       />
       { props.files.protocol ?
         <DownloadButton
           fileName={props.files.protocol}
-          label="Download XML Protocol"
+          label={t("Download XML Protocol")}
         /> : null
       }
       { props.files.report ?
         <DownloadButton
           fileName={props.files.report}
-          label="Download XML Report"
+          label={t("Download XML Report")}
         /> : null
       }
       { props.files.nrrd ?
         <DownloadButton
           fileName={props.files.nrrd}
-          label="Download NRRD"
+          label={t("Download NRRD")}
         /> : null
       }
       { props.files.nii ?
         <DownloadButton
           url={props.APIFile + '/format/nifti'}
-          label="Download NIfTI"
+          label={t("Download NIfTI")}
         /> : null
       }
       { props.files.bval ?
         <DownloadButton
           url={props.APIFile + '/format/bval'}
-          label="Download BVAL"
+          label={t("Download BVAL")}
         /> : null
       }
       { props.files.bvec ?
         <DownloadButton
           url={props.APIFile + '/format/bvec'}
-          label="Download BVEC"
+          label={t("Download BVEC")}
         /> : null
       }
       { props.files.json ?
         <DownloadButton
           url={props.APIFile + '/format/bidsjson'}
-          label="Download BIDS JSON"
+          label={t("Download BIDS JSON")}
         /> : null
       }
     </div>

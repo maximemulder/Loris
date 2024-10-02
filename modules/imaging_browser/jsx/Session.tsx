@@ -3,6 +3,9 @@ import {createRoot} from 'react-dom/client';
 import Table from './SessionTable';
 import Image from './SessionImage';
 
+import './i18n';
+import { useTranslation } from 'react-i18next';
+
 /**
  * State of the scanner ID used in the context below. It is `null` on initialization and updated
  * once the ID has been retrieved.
@@ -28,17 +31,12 @@ interface ImagesProps {
  */
 function Images(props: ImagesProps) {
   const count = props.fileIDs.length;
+  const { t } = useTranslation();
   let title: string;
-  switch (count) {
-    case 0:
-      title = 'No data available';
-      break;
-    case 1:
-      title = count + ' file displayed';
-      break;
-    default:
-      title = count + ' files displayed';
-      break;
+  if (count === 0) {
+    title = t('No data available');
+  } else {
+    title = count + t(` file(s) displayed`);
   }
 
   return (
@@ -65,6 +63,7 @@ interface SessionProps {
  * @returns The React element
  */
 function Session(props: SessionProps) {
+  const { t, i18n } = useTranslation();
   const scannerState = useState<number | null>(null);
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>

@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import {Subject, Scanner} from './types';
 import {ScannerContext} from './Session';
+import { useTranslation } from 'react-i18next';
 
 interface TableProps {
   subject: Subject;
@@ -12,6 +13,7 @@ interface TableProps {
  * @returns The React element
  */
 function Table(props: TableProps) {
+  const { t } = useTranslation();
   return (
     <div style={{overflowX: 'scroll'}}>
       <table
@@ -20,19 +22,19 @@ function Table(props: TableProps) {
       >
         <thead>
           <tr className="info">
-            <th>QC Status</th>
-            <th>Patient Name</th>
-            <th>PSCID</th>
-            <th>DCCID</th>
-            <th>Visit Label</th>
-            <th>Site</th>
-            <th>QC Pending</th>
-            <th>DOB</th>
-            <th>Sex</th>
-            <th>Output Type</th>
-            <th>Scanner</th>
-            <th>Cohort</th>
-            {props.subject.useEDC ? <th>EDC</th> : null}
+            <th>{t('QC Status')}</th>
+            <th>{t('Patient Name')}</th>
+            <th>{t('PSCID')}</th>
+            <th>{t('DCCID')}</th>
+            <th>{t('Visit Label')}</th>
+            <th>{t('Site')}</th>
+            <th>{t('QC Pending')}</th>
+            <th>{t('DOB')}</th>
+            <th>{t('Sex')}</th>
+            <th>{t('Output Type')}</th>
+            <th>{t('Scanner')}</th>
+            <th>{t('Cohort')}</th>
+            {props.subject.useEDC ? <th>{t('EDC')}</th> : null}
           </tr>
         </thead>
         <tbody>
