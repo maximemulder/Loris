@@ -419,7 +419,7 @@ class GetFile extends \NDB_Page
             AND mvl.Header NOT LIKE 'Manual Caveat Set by %';
         ";
 
-        return $this->db->pselect($query, ['fileID' => $fileID]);
+        return iterator_to_array($this->db->pselect($query, ['fileID' => $fileID]));
     }
 
     /**

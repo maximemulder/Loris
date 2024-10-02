@@ -30,7 +30,7 @@ const resources = {
       "Longitudinal View": "Vue longitudinale",
       "Show Headers": "Montrer les en-têtes",
       "Hide Headers": "Cacher les en-têtes",
-      "QC Comments": "Commentaires QC",
+      "QC Comments": "Commentaires CQ",
       'Download Image': "Télécharger l'image",
       "Download XML Protocol": "Télécharger le protocole XML",
       "Download XML Report": "Télécharger le rapport XML",

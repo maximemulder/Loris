@@ -50,8 +50,8 @@ class GetFiles extends \NDB_Page
         \User $user, ServerRequestInterface $request
     ) : void {
         $this->sessionID = intval($request->getQueryParams()['sessionID']);
-        $this->selected  = $request->getQueryParams()['selected'];
-        $this->output    = $request->getQueryParams()['output'];
+        $this->selected  = $request->getQueryParams()['selected'] ?? "";
+        $this->output    = $request->getQueryParams()['output'] ?? "";
     }
 
     /**
@@ -186,7 +186,7 @@ class GetFiles extends \NDB_Page
         );
 
         $row['fileIDs']
-            = array_map(fn($file) => intval($file['FileID']), $files);
+            = array_map(fn($file) => intval($file['FileID']), iterator_to_array($files));
 
         return $row;
     }
