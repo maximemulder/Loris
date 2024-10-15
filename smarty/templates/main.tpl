@@ -197,26 +197,26 @@
         <div id="page-content-wrapper">
             {/if}
             {if $dynamictabs eq "dynamictabs"}
-                {if $console}
+                {* {if $console}
                     <div class="alert alert-warning" role="alert">
                         <h3>Console Output</h3>
                         <div>
                         <pre>{$console}</pre>
                         </div>
                     </div>
-                {/if}
+                {/if} *}
 
             {/if}
             {if $dynamictabs neq "dynamictabs"}
             <div class="page-content inset">
 
                 {if $console}
-                    <div class="alert alert-warning" role="alert">
+                    {* <div class="alert alert-warning" role="alert">
                         <h3>Console Output</h3>
                         <div>
                         <pre>{$console}</pre>
                         </div>
-                    </div>
+                    </div> *}
 
                 {/if}
                 {if $breadcrumbs|default != "" && empty($error_message)}

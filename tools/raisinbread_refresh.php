@@ -85,7 +85,7 @@ if (! $config->getSetting('dev')['sandbox']) {
 
 echo <<<CONFIRMATION
 Please type the name of your database `$dbname` to confirm you wish to drop
-tables and import test data: 
+tables and import test data:
 CONFIRMATION;
 
 $input = trim(fgets(STDIN));
@@ -299,7 +299,7 @@ function restoreConfigSetting(string $name, string $value): void
     try {
         global $DB;
         $DB->run(
-            "UPDATE Config c 
+            "UPDATE Config c
             SET c.Value='$value'
             WHERE c.ConfigID
             IN (SELECT cs.ID FROM ConfigSettings cs WHERE cs.Name = '$name')"

@@ -26,16 +26,7 @@ class RedcapNotificationHandler
         $visit_label     = $notification->getRedcapEventName();
         $instrument_name = $notification->getInstrument();
 
-
-        // TEMP
-        $fp = fopen('/data/tmp/redcap_request.log', 'w');
-        fwrite($fp, json_encode([
-            'PSCID'           => $pscid ,
-            'Visit label'     => $visit_label,
-            'Instrument name' => $instrument_name,
-        ]));
-        fclose($fp);
-        die();
+        redcap_log($pscid);
 
         // Acquire LOCK on table to make sure notifications are hanled only once.
         $this->_acquireNotificationLock($notification);
@@ -57,6 +48,7 @@ class RedcapNotificationHandler
 
         $updated = false;
 
+
         foreach ($records as $index => $record) {
             $instrument_name = $record->getInstrumentName();
 
@@ -67,7 +59,7 @@ class RedcapNotificationHandler
             );
 
             if (!$instrument->determineDataEntryAllowed()) {
-                error_log(
+                redcap_log(
                     "[redcap] instrument already 'complete': "
                     . $pscid . " "
                     . $visit_label . " "
@@ -140,6 +132,7 @@ class RedcapNotificationHandler
                     $name,
                     [
                         'redcap_survey_identifier',
+                        'redcap_data_access_group',
                         $redcap_form_name . '_timestamp',
                         $redcap_form_name . '_complete',
                     ]
@@ -311,9 +304,16 @@ class RedcapNotificationHandler
 
         // locked timestamp only if data does not already exist
         $hasData = $this->loris->getDatabaseConnection()->pselectOne(
-            "SELECT Data FROM flag WHERE commentId = :cid",
-            ["cid" => $commentid]
+            '
+            SELECT Data
+            FROM flag f
+            JOIN instrument_data id
+            ON f.DataID = id.ID
+            WHERE commentId = :cid
+            ',
+            ['cid' => $commentid]
         );
+
         if (is_null($hasData) || empty($hasData) || $hasData === '{}') {
             // add a "redcap value lock". We not want the timestamp to be edited
             // after we receive it from REDCap. This lock should be checked
@@ -354,20 +354,22 @@ class RedcapNotificationHandler
         string $instrument_name
     ): string {
         $visit_label = $this->_getLorisVisitLabelFromRedcapEventName($visit_label, $pscid);
-
+        redcap_log(print_r($instrument_name, true));
         $db   = $this->loris->getDatabaseConnection();
         $rows = $db->pselect(
             '
             SELECT
               f.CommentID as CommentID
             FROM flag f
+            LEFT JOIN test_names t
+              ON (f.TestID = t.ID)
             LEFT JOIN session s
               ON (f.SessionID = s.ID)
             LEFT JOIN candidate c
               ON (c.CandID = s.CandID)
             WHERE
               c.PSCID = :pscid AND
-              f.Test_name = :instrument AND
+              t.Test_name = :instrument AND
               s.Visit_label = :visit AND
               f.CommentID NOT LIKE "DDE_%"
             ',
@@ -399,7 +401,9 @@ class RedcapNotificationHandler
             throw new \LorisException($msg);
         }
 
-        $row = array_shift($rows);
+        $row = array_shift(iterator_to_array($rows));
+
+        redcap_log(print_r($row, true));
 
         return $row['CommentID'];
     }
@@ -431,7 +435,7 @@ class RedcapNotificationHandler
     private function _acquireNotificationLock(Notification $notification): void
     {
         $db = $this->loris->getDatabaseConnection();
-        $db->run('LOCK TABLES redcap_notification as lock_1 WRITE');
+        // $db->run('LOCK TABLES redcap_notification as lock_1 WRITE');
 
         $query = '
             SELECT
@@ -502,6 +506,6 @@ class RedcapNotificationHandler
     private function _releaseNotificationLock(): void
     {
         $db = $this->loris->getDatabaseConnection();
-        $db->run('UNLOCK TABLES');
+        // $db->run('UNLOCK TABLES');
     }
 }

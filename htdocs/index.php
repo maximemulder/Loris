@@ -22,6 +22,18 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+$first = true;
+
+function redcap_log($message) {
+    global $first;
+    $mode = $first ? 'w' : 'a';
+    $first = false;
+    $fp = fopen('/data/redcap.log', $mode);
+    fwrite($fp, strval($message) . "\n");
+    fclose($fp);
+}
+try {
+
 // We don't want PHP to automatically add cache control headers unless
 // we explicitly generate them in the request response. (This needs
 // to be done before NDB_Client starts the PHP session.)
@@ -104,4 +116,8 @@ ob_implicit_flush();
 while ($bodystream->eof() == false) {
     // 64k oughta be enough for anybody.
     print $bodystream->read(1024*64);
+}
+
+} catch (\Throwable $e) {
+    redcap_log($e->getMessage());
 }

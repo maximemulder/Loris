@@ -160,7 +160,13 @@ class RedcapHttpClient
                 'debug'       => false
             ]
         );
-        return json_decode((string) $response->getBody(), true);
+
+        $response_string = (string) $response->getBody();
+        if ($response_string === 'null') {
+            return [];
+        }
+
+        return json_decode($response_string, true);
     }
 
     private function _fetchProjectInfo(): array
@@ -195,8 +201,10 @@ class RedcapHttpClient
                 'pscid' => $pscid
             ]
         );
-        $project_title = \Candidate::singleton(new CandID($candid))->getProjectTitle();
-        // if Pilot Project
+
+        $project_title = \Candidate::singleton(new CandID(strval($candid)))->getProjectTitle();
+
+        // TODO: Generalize this
         switch ($project_title) {
             case 'HBCD Main':
                 yield from [
@@ -229,7 +237,14 @@ class RedcapHttpClient
                     ["event_name"=>"P07c","arm_num"=>1,"unique_event_name"=>"v07c_arm_1","custom_event_label"=>null]
                 ];
                 break;
+            case 'Montreal Paris NeuroBank':
+                yield from [
+                    ["event_name" => "TRIAGE", "arm_num" => 1, "unique_event_name" => "triage_arm_1", "custom_event_label" => null]
+                ];
+                break;
             default:
+
+                die();
                 throw new \LorisException('No visit matched to Project');
         }
     }
