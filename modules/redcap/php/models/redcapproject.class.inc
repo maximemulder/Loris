@@ -9,6 +9,8 @@ namespace LORIS\redcap\Models;
  */
 class RedcapProject
 {
+    private array $_props;
+
     /**
      * Constructor
      *

@@ -2269,7 +2269,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
             $conditions   = ['tn.test_name=:tn'];
             $params['tn'] = $this->testName;
             if ($commentIDs !== null) {
-                $conditions[] = "CommentID IN 
+                $conditions[] = "CommentID IN
 			    (SELECT CommentID FROM load_comment_ids)";
             }
             if ($condition !== null) {
@@ -2343,7 +2343,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
                 . ' ';
             }
             $where = 'WHERE ' . join(' AND ', $conditions);
-            $query = "SELECT 
+            $query = "SELECT
 		    session.CandID as CandID,
 		    t.CommentID as CommentID,
                     session.Visit_Label as VisitLabel,
@@ -2419,8 +2419,8 @@ abstract class NDB_BVL_Instrument extends NDB_Page
         // for this instrument with current session's visit & project
         $dxEvolutionID = $DB->pselectOne(
             "SELECT DxEvolutionID FROM diagnosis_evolution
-            WHERE instrumentName=:tn 
-            AND ProjectID=:pid 
+            WHERE instrumentName=:tn
+            AND ProjectID=:pid
             AND visitLabel=:vl",
             [
                 'tn'  => $this->testName,
@@ -2448,7 +2448,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
 
         // Get the fields that correspond to a configured diagnosis
         $sourceFields = $DB->pselectOne(
-            "SELECT sourceField 
+            "SELECT sourceField
             FROM diagnosis_evolution
             WHERE DxEvolutionID=:dxEvID",
             ['dxEvID' => $dxEvolutionID]

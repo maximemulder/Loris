@@ -216,6 +216,10 @@ class Notifications extends Endpoint
 
     private function createIssue(\Database $db, string $title, string $data)
     {
+        redcap_log("ISSUE: $title");
+        redcap_log($data);
+        die();
+
         // get redcap module ID
         $redcapModuleID = $db->pselectOne(
             'SELECT m.ID FROM modules m WHERE m.Name = "redcap"',
