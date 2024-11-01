@@ -130,7 +130,9 @@ class NDB_Client
         header(
             "Content-Security-Policy: "
             . "default-src 'self' 'unsafe-inline'; "
-            . "script-src 'self' 'unsafe-inline' 'unsafe-eval' $CaptchaDomains; "
+            . "connect-src 'self' https://cdn.jsdelivr.net https://mlts.dynamsoft.com; "
+            . "script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval' $CaptchaDomains; "
+            . "worker-src blob:; "
             . "font-src 'self' data:; "
             . "img-src 'self' https://images.loris.ca data:; "
             . "frame-ancestors 'none'; "

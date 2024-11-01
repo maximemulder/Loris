@@ -12,6 +12,8 @@
         "@fortawesome/fontawesome-free": "^5.11.2",
         "copy-webpack-plugin": "^11.0.0",
         "dompurify": "^2.5.4",
+        "dynamsoft-barcode-reader-bundle": "^10.4.2002",
+        "dynamsoft-camera-enhancer": "^4.1.0",
         "jstat": "^1.9.5",
         "jszip": "^3.10.1",
         "papaparse": "^5.3.0",
